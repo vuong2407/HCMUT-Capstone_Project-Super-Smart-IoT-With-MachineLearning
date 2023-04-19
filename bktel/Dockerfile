@@ -55,6 +55,8 @@ RUN sudo chmod -R o+rx /usr/lib/node_modules/puppeteer/.local-chromium
 
 RUN /usr/sbin/phpenmod mcrypt
 
+WORKDIR /var/www/app
+
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 RUN rm -f /etc/nginx/nginx.conf
@@ -62,7 +64,6 @@ RUN rm -f /etc/nginx/sites-enabled/default
 ADD . /var/www/app
 ADD ./docker/nginx /etc/nginx
 
-WORKDIR /var/www/app
 
 RUN chown -R www-data:www-data /var/www/app
 RUN chmod -R 777 /var/www/app/storage
@@ -70,6 +71,8 @@ RUN chmod -R 777 /var/www/app/bootstrap/cache
 
 RUN chown -R www-data:www-data /var/log/supervisor/ &&\
     chown -R www-data:www-data /etc/nginx/
+
+COPY --chown=www:www . /var/www/app
 
 COPY . .
 COPY package*.json /var/www/app/
