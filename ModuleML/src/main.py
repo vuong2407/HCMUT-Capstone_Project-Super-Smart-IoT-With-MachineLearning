@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, jsonify
 import os
+import json
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -12,7 +13,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 @app.route("/")
 def hello_world():
-    return "Hello Wssorld"
+    return json.dumps({"message":"Hello Wssorld"})
 
 def predict_diseases(pathImage):
     import Modules.UsingModel as UM

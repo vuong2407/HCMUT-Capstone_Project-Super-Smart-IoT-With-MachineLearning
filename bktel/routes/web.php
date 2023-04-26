@@ -61,5 +61,5 @@ Route::get('/register-receive-mail', [HomeController::class, 'registerMail']);
 
 //weather
 Route::get('/weather', [HomeController::class, 'weather'])->name('weather');
-
+Route::get('/fetch-data', [HomeController::class, 'fetchData'])->name('fetchData');
 
