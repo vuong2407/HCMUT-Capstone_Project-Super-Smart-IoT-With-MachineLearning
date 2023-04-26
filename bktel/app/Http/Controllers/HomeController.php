@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Dnsimmons\OpenWeather\OpenWeather;
+use Illuminate\Support\Facades\Http;
 class HomeController extends Controller
 {
     /**
@@ -149,4 +150,8 @@ class HomeController extends Controller
         // dd($forecast);
         return view('admin.weather', compact('current'));
     }
+    public function fetchData() {
+        $response = Http::get('http://localhost:5001/');
+        return $response->json();
+    }   
 }
