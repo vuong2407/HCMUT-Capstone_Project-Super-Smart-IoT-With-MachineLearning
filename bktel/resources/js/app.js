@@ -32,6 +32,8 @@ Vue.component('register-farm-component', require('./components/farm/RegisterFarm
 Vue.component('register-user-component', require('./components/RegisterUserComponent').default)
 Vue.component('register-receive-mail-component', require('./components/RegisterReceiveMailComponent').default)
 Vue.component('weather-component', require('./components/WeatherComponent').default)
+Vue.component('plant-diseases-component', require('./components/PlantDiseasesComponent').default)
+
 
 
 

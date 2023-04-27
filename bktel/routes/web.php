@@ -63,3 +63,8 @@ Route::get('/register-receive-mail', [HomeController::class, 'registerMail']);
 Route::get('/weather', [HomeController::class, 'weather'])->name('weather');
 Route::get('/fetch-data', [HomeController::class, 'fetchData'])->name('fetchData');
 
+Route::get('/plant-diseases', [HomeController::class, 'plantDiseases'])->name('plantDiseases');
+Route::post('/api/plant-diseases', [HomeController::class, 'predictDisease'])->name('predictDisease');
+
+
+

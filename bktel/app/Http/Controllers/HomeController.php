@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Dnsimmons\OpenWeather\OpenWeather;
 use Illuminate\Support\Facades\Http;
+
 class HomeController extends Controller
 {
     /**
@@ -29,13 +30,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = InputDevice::where('id','>',0)->get();
+        $data = InputDevice::where('id', '>', 0)->get();
         return view('admin.admin', compact('data'));
     }
 
     public function dashboard()
     {
-        $data = InputDevice::where('id','>',0)->get();
+        $data = InputDevice::where('id', '>', 0)->get();
         return view('admin.admin', compact('data'));
     }
     /**
@@ -49,10 +50,10 @@ class HomeController extends Controller
     }
 
     /**
-    * Show the application history.
-    *
-    * @return \Illuminate\Contracts\Support\Renderable
-    */
+     * Show the application history.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function control()
     {
         // $weather = new OpenWeather();
@@ -67,7 +68,8 @@ class HomeController extends Controller
         return view('farm.register', compact('user'));
     }
 
-    public function saveFarmData(Request $request ){
+    public function saveFarmData(Request $request)
+    {
         // $request->validate([
         //     'name' => 'required' ,
         //     'parameter' => 'required' ,
@@ -81,19 +83,19 @@ class HomeController extends Controller
 
         // return response()->json($output);
         $request->validate([
-            'name' => 'required' ,
-            'location' => 'required' ,
+            'name' => 'required',
+            'location' => 'required',
         ]);
-        $farm = new Farm() ;
-        $farm -> name = $request['name'];
-        $farm -> location = $request['location'];
-        $farm -> save() ;
+        $farm = new Farm();
+        $farm->name = $request['name'];
+        $farm->location = $request['location'];
+        $farm->save();
         return response()->json($farm);
     }
 
     public  function getAllFarm(Request $request)
     {
-        $data = Farm::where('id','>',0)->get();
+        $data = Farm::where('id', '>', 0)->get();
 
         return response()->json($data);
     }
@@ -105,38 +107,41 @@ class HomeController extends Controller
     }
 
     //show form register information to recieve mail
-    public function  registerMail(){
-        $farm = Farm::where('id','>', 0)->get();
-        return view('emails.form-register',compact('farm'));
+    public function  registerMail()
+    {
+        $farm = Farm::where('id', '>', 0)->get();
+        return view('emails.form-register', compact('farm'));
     }
 
     /**
-    * Send mail
-    *
-    * @return \Illuminate\Contracts\Support\Renderable
-    */
+     * Send mail
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function testMail(Request $request)
     {
         $email = $request['email'];
         $name =  $request['name'];
         // info($email);
         // $name = 'test name' ;
-        Mail::send('emails.test', compact('name'), function($email){
+        Mail::send('emails.test', compact('name'), function ($email) {
             $email->to('nha.le141001@hcmut.edu.vn', 'Lê Thanh Nhã')->subject('Mail from BKfarm');
-        }) ;
+        });
     }
 
-    public function saveMail(Request $request){
-        $email = new Email() ;
-        $email -> name = $request['name'];
-        $email -> email = $request['email'];
-        $email -> farm_id = $request['farm_id'];
-        $email -> save() ;
+    public function saveMail(Request $request)
+    {
+        $email = new Email();
+        $email->name = $request['name'];
+        $email->email = $request['email'];
+        $email->farm_id = $request['farm_id'];
+        $email->save();
         return response()->json($email);
     }
 
-    public function getallMail(Request $request){
-        $email = Email::where('id','>',0)->get();
+    public function getallMail(Request $request)
+    {
+        $email = Email::where('id', '>', 0)->get();
         return response()->json($email);
     }
 
@@ -150,8 +155,32 @@ class HomeController extends Controller
         // dd($forecast);
         return view('admin.weather', compact('current'));
     }
-    public function fetchData() {
-        $response = Http::get('http://localhost:5001/');
+    public function fetchData()
+    {
+        $response = Http::get('http://172.21.0.3:5000/');
         return $response->json();
-    }   
+    }
+
+    public function plantDiseases()
+    {
+        return view('admin.plant-diseases');
+    }
+
+    public function predictDisease(Request $request)
+    {
+        // dd(123);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            // $fileContents = file_get_contents($file->getRealPath());
+            $response = Http::post('http://localhost:5001/upload', [
+                'file' => $file,
+            ]);
+            if ($response->successful()) {
+                return 'Upload thành công';
+            } else {
+                return 'Upload không thành công';
+            }
+        }
+        // $response = Http::get('http://localhost:5001/');
+    }
 }

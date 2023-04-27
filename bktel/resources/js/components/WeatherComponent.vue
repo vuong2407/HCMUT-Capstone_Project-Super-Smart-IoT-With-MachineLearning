@@ -53,7 +53,9 @@
                                                 <p class="small">
                                                     <strong>21°C</strong>
                                                 </p>
-                                                <i class="fas fa-sun fa-2x mb-3" style="color: #ddd"></i>
+                                                <!-- <i class="far fa-sun fa-2x mb-3" style="color: #ddd"></i> -->
+                                                <img src="/images/sun-cloud.jpeg"
+                                                    width="50px" />
                                                 <p class="mb-0">
                                                     <strong>12:00</strong>
                                                 </p>
