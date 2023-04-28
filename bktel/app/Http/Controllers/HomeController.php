@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Dnsimmons\OpenWeather\OpenWeather;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
+use Illuminate\Http\UploadedFile;
+
 
 class HomeController extends Controller
 {
@@ -157,7 +161,7 @@ class HomeController extends Controller
     }
     public function fetchData()
     {
-        $response = Http::get('http://172.21.0.3:5000/');
+        $response = Http::get('http://bktel-python-1:5000/');
         return $response->json();
     }
 
@@ -171,16 +175,34 @@ class HomeController extends Controller
         // dd(123);
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            // $fileContents = file_get_contents($file->getRealPath());
-            $response = Http::post('http://localhost:5001/upload', [
-                'file' => $file,
+
+            $client = new Client();
+            // $path = $file->storeAs('public/uploads',  'test.jpg');
+            $storedFile = $file->store('uploads');
+
+            $uploadedFile = new UploadedFile(
+                storage_path('app/' . $storedFile),
+                $file->getClientOriginalName(),
+                $file->getClientMimeType(),
+                $file->getSize(),
+                $file->getError()
+            );
+            // dd($uploadedFile);
+            // $fileUpload = new UploadedFile($path, 'test.jpg');
+
+            $url = 'http://bktel-python-1:5000/api/predict-diseases';
+            $response = $client->request('POST', $url, [
+                'multipart' => [
+                    [
+                        'name'     => 'file',
+                        'contents' => fopen($uploadedFile->getPathname(), 'r'),
+                        'filename' => $uploadedFile->getClientOriginalName(),
+                    ],
+                ]
             ]);
-            if ($response->successful()) {
-                return 'Upload thành công';
-            } else {
-                return 'Upload không thành công';
-            }
+            $responseBody = $response->getBody()->getContents();
+            // $responseData = json_decode($response->getBody()->getContents(), true);
+            dd($responseBody);
         }
-        // $response = Http::get('http://localhost:5001/');
     }
 }
