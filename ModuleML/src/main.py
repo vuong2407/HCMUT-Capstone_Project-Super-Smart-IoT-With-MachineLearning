@@ -3,7 +3,7 @@ import os
 import json
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 messages = [
     {"role": "system", "content": "You are a helpful and kind AI Assistant."},
