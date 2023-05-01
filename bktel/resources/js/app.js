@@ -33,6 +33,7 @@ Vue.component('register-user-component', require('./components/RegisterUserCompo
 Vue.component('register-receive-mail-component', require('./components/RegisterReceiveMailComponent').default)
 Vue.component('weather-component', require('./components/WeatherComponent').default)
 Vue.component('plant-diseases-component', require('./components/PlantDiseasesComponent').default)
+Vue.component('chat-gpt-component', require('./components/ChatGptComponent').default)
 
 
 

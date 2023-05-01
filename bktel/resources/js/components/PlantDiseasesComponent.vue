@@ -11,12 +11,6 @@
             </div>
             <div class="mt-8 space-y-3">
                 <div class="grid grid-cols-1 space-y-2">
-                    <label class="text-sm font-bold text-gray-500 tracking-wide">Title</label>
-                    <input
-                        class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
-                        type="" placeholder="">
-                </div>
-                <div class="grid grid-cols-1 space-y-2">
                     <label class="text-sm font-bold text-gray-500 tracking-wide">Attach Document</label>
                     <div class="flex items-center justify-center w-full">
                         <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
@@ -40,6 +34,19 @@
                 <p class="text-sm text-gray-300">
                     <span>File type: doc,pdf,types of images</span>
                 </p>
+                <div class=" space-y-2">
+                    <label class="text-[12px] font-bold text-gray-800 tracking-wide">Result</label>
+                    <div class="grid  grid-cols-2 gap-[10px] flex flex-row">
+                        <div
+                            class="flex justify-center items-center text-base h-[40px] border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+                            <span>{{ result.name !== {} ? result.name : '' }}</span>
+                        </div>
+                        <div
+                            class="flex justify-center items-center text-base h-[40px] border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+                            <span>{{ result.disease !== {} ? result.disease : '' }}</span>
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <button @click="uploadImage"
                         class="w-full flex justify-center bg-blue-500 text-gray-100 p-4  rounded-full tracking-wide
@@ -50,8 +57,8 @@
             </div>
         </div>
         <div class="vl-parent">
-            <Loading :isActive="isActive" :active="isActive"  :can-cancel="true" :on-cancel="onCancel" :is-full-page="fullPage" style="z-index: 1000;"/>
-            <label><input type="checkbox" v-model="fullPage">Full page?</label>
+            <Loading :active="isActive" :can-cancel="true" :on-cancel="onCancel" :is-full-page="fullPage"
+                style="z-index: 1000;" />
         </div>
     </div>
 </template>
@@ -69,8 +76,9 @@ export default {
         return {
             imageFile: null,
             imageUrl: null,
-            isActive: true,
-            fullPage: true
+            isActive: false,
+            fullPage: true,
+            result: { name: "", disease: "" },
         }
     },
     components: {
@@ -92,12 +100,17 @@ export default {
         uploadImage() {
             const formData = new FormData();
             formData.append('file', this.imageFile);
+            this.isActive = true;
             axios
                 .post(this.predictDiseaseUrl, formData)
                 .then((res) => {
                     console.log(res);
+                    this.result = res.data;
                 })
-                .catch((err) => { });
+                .catch((err) => { })
+                .finally(() => {
+                    this.isActive = false;
+                })
         }
     }
 }

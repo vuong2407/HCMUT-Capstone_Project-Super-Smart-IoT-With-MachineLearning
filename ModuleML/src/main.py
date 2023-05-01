@@ -3,7 +3,7 @@ import os
 import json
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 messages = [
     {"role": "system", "content": "You are a helpful and kind AI Assistant."},
@@ -81,7 +81,7 @@ def upload_file():
 		os.remove(path)
 		# resp = jsonify({'message' : 'File successfully uploaded'})
 		# resp.status_code = 201
-		return resp
+		return json.dumps(resp)
 	else:
 		resp = jsonify({'message' : 'Allowed file types are txt, pdf, png, jpg, jpeg, gif'})
 		resp.status_code = 400

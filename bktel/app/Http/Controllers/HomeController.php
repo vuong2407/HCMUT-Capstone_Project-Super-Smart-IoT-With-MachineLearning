@@ -187,8 +187,6 @@ class HomeController extends Controller
                 $file->getSize(),
                 $file->getError()
             );
-            // dd($uploadedFile);
-            // $fileUpload = new UploadedFile($path, 'test.jpg');
 
             $url = 'http://bktel-python-1:5000/api/predict-diseases';
             $response = $client->request('POST', $url, [
@@ -201,8 +199,35 @@ class HomeController extends Controller
                 ]
             ]);
             $responseBody = $response->getBody()->getContents();
-            // $responseData = json_decode($response->getBody()->getContents(), true);
-            dd($responseBody);
+            return ($responseBody);
         }
+    }
+    public function chatGPT() {
+        return view('admin.chat-gpt');
+    }
+
+    public function sendMessageToGPT(Request $request) {
+        $message = $request->message;
+        // $message = json_decode($message); 
+        $client = new Client();
+        $url = 'http://bktel-python-1:5000/api/chat-gpt/suggestion';
+        // $response = $client->request('GET', $url, [
+        //     'multipart' => [
+        //         [
+        //             'name'     => "input",
+        //             'contents' => $message,
+        //         ],
+        //     ]
+        // ]);
+        $response = $client->request('GET', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'input' => $message,
+            ],
+        ]);
+        $responseBody = $response->getBody()->getContents();
+        return ($responseBody);
     }
 }
