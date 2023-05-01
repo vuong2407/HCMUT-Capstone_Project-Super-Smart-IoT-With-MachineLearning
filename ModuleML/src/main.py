@@ -59,9 +59,7 @@ def suggestion():
             return chatbot(param['input'])
       resp = jsonify({'message': 'input is invalid'})
       resp.status_code = 400
-      return resp
-          
-
+      return resp          
 
 @app.route('/api/predict-diseases', methods=['POST'])
 def upload_file():
@@ -88,6 +86,23 @@ def upload_file():
 		resp = jsonify({'message' : 'Allowed file types are txt, pdf, png, jpg, jpeg, gif'})
 		resp.status_code = 400
 		return resp
+
+@app.route('/api/predict-watering')
+def watering():
+      if not request.is_json:
+            resp = jsonify({'message': 'content-type must be application/json'})
+            resp.status_code = 400
+            return resp
+      param = request.json
+      if ('moisture' in param) and ('temperature' in param):
+            moisture = param['moisture']
+            temperature = param['temperature']
+            import Modules.UsingModel as UM
+            result = UM.predict_irrigation_pump(moisture, temperature)
+            return jsonify({'result': result.item()})
+      resp = jsonify({'message': 'data is invalid'})
+      resp.status_code = 400
+      return resp
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
