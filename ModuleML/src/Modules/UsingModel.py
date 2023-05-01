@@ -3,6 +3,8 @@ from tensorflow import keras
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 from tensorflow.keras.applications.resnet50 import preprocess_input
+import pandas as pd
+import pickle
 
 # Define a function to predict an image using the loaded model
 def predict_image(image_path, model):
@@ -25,6 +27,20 @@ def handle_predict(model, data_dir, prediction):
     labels = list(class_indices.keys())
     predicted_class = labels[np.argmax(prediction)]
     return predicted_class
+
+# Define a function to predict watering the plant
+def predict_irrigation_pump(moisture, temperature):
+    # Load the trained model
+    with open('./Modules/irrigation_model.pkl', 'rb') as file:
+        model = pickle.load(file)
+
+    # Create a DataFrame with the input data
+    input_data = pd.DataFrame({'moisture': [moisture], 'temp': [temperature]})
+
+    # Make the prediction
+    pump_prediction = model.predict(input_data)[0]
+
+    return pump_prediction
 
 
     
