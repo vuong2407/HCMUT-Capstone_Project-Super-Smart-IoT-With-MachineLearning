@@ -1,7 +1,6 @@
 <template>
-    <section class="vh-96" style="background-color: #c1cfea">
-        <div class="py-2 h-100">
-            <input type="file" placeholder="img" @change="checkFile($event)" class="w-full h-full" />
+    <section class="h-[92vh] overflow-hidden" style="background-color: #c1cfea">
+        <div class=" h-100">
             <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828">
                 <div class="col-md-9 col-lg-7 col-xl-5">
                     <div class="card mb-4 gradient-custom" style="border-radius: 25px">

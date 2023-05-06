@@ -147,6 +147,12 @@ export default {
     props: {
         sendMessageGpt: {
             type: String
+        },
+        name: {
+            type: String
+        },
+        disease: {
+            type: String
         }
     },
     data() {
@@ -164,7 +170,12 @@ export default {
             newMessage: ''
         }
     },
-
+    mounted() {
+        if (this.name && this.disease) {
+            this.newMessage = 'The ' + this.name + ' in my farm has ' + this.disease + ' disease, what should i do?';
+            this.sendMessage();
+        }
+    },
     methods: {
         async sendMessage() {
             const message = this.newMessage.trim();

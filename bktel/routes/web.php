@@ -67,6 +67,4 @@ Route::get('/plant-diseases', [HomeController::class, 'plantDiseases'])->name('p
 Route::post('/api/plant-diseases', [HomeController::class, 'predictDisease'])->name('predictDisease');
 Route::get('/chat-GPT', [HomeController::class, 'chatGPT'])->name('chatGPT');
 Route::post('/send-message-gpt', [HomeController::class, 'sendMessageToGPT'])->name('sendMessageToGPT');
-
-
-
+Route::post('/check-water-pump', [HomeController::class, 'checkWaterPump'])->name('checkWaterPump');

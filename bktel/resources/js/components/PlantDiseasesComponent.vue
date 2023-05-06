@@ -2,18 +2,18 @@
     <div class="relative h-[92vh] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
         style="background-image: url(https://images.unsplash.com/photo-1621243804936-775306a8f2e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);">
         <div class="absolute bg-black opacity-40 inset-0 z-0"></div>
-        <div class="sm:max-w-lg w-full p-10 bg-white rounded-xl z-10">
+        <div class="sm:max-w-lg w-full p-[30px] bg-white rounded-xl z-10 scale-[95%]">
             <div class="text-center">
                 <h2 class="text-3xl font-bold text-gray-900">
                     File Upload!
                 </h2>
                 <p class="mt-2 text-sm text-gray-400">Put your leaf into here</p>
             </div>
-            <div class="mt-8 space-y-3">
+            <div class="mt-3 space-y-3">
                 <div class="grid grid-cols-1 space-y-2">
                     <label class="text-sm font-bold text-gray-500 tracking-wide">Attach Document</label>
                     <div class="flex items-center justify-center w-full">
-                        <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                        <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-5 group text-center">
                             <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
                                 <div class="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
                                     <img v-if="!imageUrl" class="has-mask h-36 object-center"
@@ -49,10 +49,18 @@
                 </div>
                 <div>
                     <button @click="uploadImage"
-                        class="w-full flex justify-center bg-blue-500 text-gray-100 p-4  rounded-full tracking-wide
+                        class="w-full flex justify-center bg-blue-500 text-gray-100 p-3 rounded-full tracking-wide
                                 font-semibold  focus:outline-none focus:shadow-outline hover:bg-blue-600 shadow-lg cursor-pointer transition ease-in duration-300">
                         Upload
                     </button>
+                </div>
+                <div v-if="result.name !== ''"
+                    class="flex flex-col bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative"
+                    role="alert">
+                    <span class="block sm:inline">I found from your {{ result.name }} leaf {{ result.disease }}
+                        disease.</span>
+                    <span class="block sm:inline">Do you want get information from chat GPT <span @click="chatWithGPT"
+                            class="text-green-500 cursor-pointer">Yes</span>/No</span>
                 </div>
             </div>
         </div>
@@ -70,6 +78,9 @@ export default {
     props: {
         predictDiseaseUrl: {
             type: String,
+        },
+        redirectToChatGpt: {
+            type: String,
         }
     },
     data() {
@@ -85,6 +96,10 @@ export default {
         Loading
     },
     methods: {
+        chatWithGPT() {
+            const url = '/chat-GPT';
+            window.location.href = `${url}?name=${this.result.name}&disease=${this.result.disease}`;
+        },
         onCancel() {
             this.isActive = false;
         },

@@ -202,23 +202,18 @@ class HomeController extends Controller
             return ($responseBody);
         }
     }
-    public function chatGPT() {
-        return view('admin.chat-gpt');
+    public function chatGPT(Request $request) 
+    {
+        $name= $request->input('name', '');
+        $disease = $request->input('disease', '');
+        return view('admin.chat-gpt', compact('name', 'disease'));
     }
 
-    public function sendMessageToGPT(Request $request) {
+    public function sendMessageToGPT(Request $request)
+    {
         $message = $request->message;
-        // $message = json_decode($message); 
         $client = new Client();
         $url = 'http://bktel-python-1:5000/api/chat-gpt/suggestion';
-        // $response = $client->request('GET', $url, [
-        //     'multipart' => [
-        //         [
-        //             'name'     => "input",
-        //             'contents' => $message,
-        //         ],
-        //     ]
-        // ]);
         $response = $client->request('GET', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -229,5 +224,24 @@ class HomeController extends Controller
         ]);
         $responseBody = $response->getBody()->getContents();
         return ($responseBody);
+    }
+
+    public function checkWaterPump(Request $request) {
+        $temp = $request->temp;
+        $hum = $request->hum;
+        $client = new Client();
+        $url = 'http://bktel-python-1:5000/api/predict-watering';
+        $response = $client->request('GET', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                "moisture" => $temp,
+                "temperature" => $hum
+            ],
+        ]);
+        $responseBody = $response->getBody()->getContents();
+        return ($responseBody);
+
     }
 }
