@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, jsonify
 import os
 import json
 import openai
+import Modules.UsingModel as UM
+from tensorflow import keras
 
 openai.api_key = "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"
 
@@ -23,8 +25,6 @@ def hello_world():
     return json.dumps({"message":"Hello Wssorld"})
 
 def predict_diseases(pathImage):
-    import Modules.UsingModel as UM
-    from tensorflow import keras
     model = keras.models.load_model("./Modules/Model_2.h5")
     prediction = UM.predict_image(pathImage, model)
     data_dir = "./data/diseases/New Plant Diseases Dataset(Augmented)/New Plant Diseases Dataset(Augmented)"
@@ -97,9 +97,8 @@ def watering():
       if ('moisture' in param) and ('temperature' in param):
             moisture = param['moisture']
             temperature = param['temperature']
-            import Modules.UsingModel as UM
             result = UM.predict_irrigation_pump(moisture, temperature)
-            return jsonify({'result': result.item()})
+            return str(result.item())
       resp = jsonify({'message': 'data is invalid'})
       resp.status_code = 400
       return resp
