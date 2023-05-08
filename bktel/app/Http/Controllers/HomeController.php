@@ -156,8 +156,9 @@ class HomeController extends Controller
         $current = $weather->getCurrentWeatherByCityId('1566083');
         // dd($current);
         $forecast = $weather->getForecastWeatherByCityId('1566083');
-        // dd($forecast);
-        return view('admin.weather', compact('current'));
+        $days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        return view('admin.weather', compact('current','forecast'));
     }
     public function fetchData()
     {

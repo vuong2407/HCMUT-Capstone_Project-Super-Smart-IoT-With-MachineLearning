@@ -33,23 +33,23 @@
                             <div class="flex flex-row gap-x-[15px] items-center"> 
                                 <span class="text-sm font-semibold text-gray-900 dark:text-gray-300 mr-[25px]" >LCD</span>
                                 <label class="inline-flex relative items-center mr-5 cursor-pointer">
-                                    <input type="checkbox" v-model="lcdOn" @click="toggleLcd()" class="sr-only peer">
+                                    <input type="checkbox" v-model="lcdStatus" @click="toggleLcd()" class="sr-only peer">
                                     <div class="w-11 border-[2px] border-green-600 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                                    <span v-if="lcdOn" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">On</span>
-                                    <span v-if="!lcdOn" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Off</span>
+                                    <span v-if="lcdStatus" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">On</span>
+                                    <span v-if="!lcdStatus" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Off</span>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="border border-solid rounded-[10px] w-[500px] h-auto bg-gray-200 "> 
+            <div class="border border-solid rounded-[10px] w-[500px] h-auto bg-blue-200 "> 
                 <div class="my-[30px] flex justify-center text-center flex-col"> 
                     <span class="font-bold text-[20px]"> Mode</span>
                     <div class="mt-[20px] mb-[20px] flex justify-center text-center flex-row gap-x-[40px]"> 
                         <div> 
                             <input type="checkbox" name="Manual" disabled class="scale-150">
-                            <span class="font-bold text-[20px] ml-[5px]"> Auto (developing) </span>
+                            <span class="font-bold text-[20px] ml-[5px]"> Auto</span>
                         </div>
                     </div>
                     <div class="w-full flex justify-center my-[10px]"> 
@@ -174,6 +174,7 @@
                 commandSelected: {},
                 manual: true ,
                 ledStatus: "", 
+                lcdStatus: "",
                 userName: "",
                 status: "",
                 time : new Date() ,
@@ -252,26 +253,26 @@
                 })
             },
             toggleLcd(){
-                this.lcdOn = !this.lcdOn ;
-                if(this.lcdOn) {
-                    this.status = "turn on Lcd"
-                }
-                else{
-                    this.status = "turn off Lcd"
-                }
-                let obj = {
-                    name : this.user.name,
-                    command : this.status ,
-                    timestamp: this.time.toLocaleString() ,
-                }
-                firebase.firestore.collection("commands").add(obj)
-                .then(doc =>{
-                    alert('command is send with Doc id: ' + doc.id )
-                    this.status = "";
-                    this.fetchData()
-                }).catch(e => {
-                    console.log(e)
-                })
+            //     this.lcdOn = !this.lcdOn ;
+            //     if(this.lcdOn) {
+            //         this.status = "turn on Lcd"
+            //     }
+            //     else{
+            //         this.status = "turn off Lcd"
+            //     }
+            //     let obj = {
+            //         name : this.user.name,
+            //         command : this.status ,
+            //         timestamp: this.time.toLocaleString() ,
+            //     }
+            //     firebase.firestore.collection("commands").add(obj)
+            //     .then(doc =>{
+            //         alert('command is send with Doc id: ' + doc.id )
+            //         this.status = "";
+            //         this.fetchData()
+            //     }).catch(e => {
+            //         console.log(e)
+            //     })
             },
             saveData(){
             },
