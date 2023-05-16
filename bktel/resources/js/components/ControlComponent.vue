@@ -13,7 +13,7 @@
                     <div class="w-full flex justify-center my-[10px]"> 
                         <div class="flex justify-center text-center flex-col gap-y-[15px] scale-125"> 
                             <div class="flex flex-row gap-x-[15px] items-center"> 
-                                <span class="text-sm font-semibold text-gray-900 dark:text-gray-300 " >MOTOR</span>
+                                <span class="text-sm font-semibold text-gray-900 dark:text-gray-300 " >ROOF</span>
                                 <label class="inline-flex relative items-center mr-5 cursor-pointer ">
                                     <input type="checkbox" v-model="motorStatus" class="sr-only peer" @click="toggleMotor()">
                                     <div class="w-11 border-[2px] border-green-600 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
@@ -31,7 +31,7 @@
                                 </label>
                             </div>
                             <div class="flex flex-row gap-x-[15px] items-center"> 
-                                <span class="text-sm font-semibold text-gray-900 dark:text-gray-300 mr-[25px]" >LCD</span>
+                                <span class="text-sm font-semibold text-gray-900 dark:text-gray-300 mr-[25px]" >FAN</span>
                                 <label class="inline-flex relative items-center mr-5 cursor-pointer">
                                     <input type="checkbox" v-model="lcdStatus" @click="toggleLcd()" class="sr-only peer">
                                     <div class="w-11 border-[2px] border-green-600 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
@@ -141,7 +141,7 @@
     import firebase from '../../utl/firebase'
     import database from '../../utl/firebase'
     import { onMounted, reactive } from 'vue'
-    import { motorStatus } from '../../utl/firebase'
+    import { motorStatus, led1Status, ledStatus } from '../../utl/firebase'
     import VueToastr from "vue-toastr";
     export default {
         firebase: {
@@ -161,9 +161,12 @@
             })
             onMounted (async() => {
                 let motorStatusSet = motorStatus.on("value", change => {
-                    state.motorStatus = change.val();
+                    this.motorStatus = change.val() == 1 ? 0 : 1;
                     console.log(state.motorStatus);
                 });
+                ledStatus.on("value", change => {
+                    this.ledStatus = change.val()
+                })
             })
             return { state };
         },
@@ -183,7 +186,7 @@
         mounted(){
             this.fetchData();
             let motorStatusSet = motorStatus.on("value", change => {
-                this.motorStatus = change.val();
+                this.motorStatus = change.val() == 1 ? 0 : 1;
                 console.log(this.motorStatus);
             });
         },
@@ -192,17 +195,17 @@
                 // this.$toastr.s("SUCCESS MESSAGE", "Success Toast Title");
                 // this.$toastr.w("WARNING MESSAGE");
                 if(this.motorStatus == 0 ) {
-                    this.motorStatus = 1;
+                    this.motorStatus = 0;
                     this.status = "turn on motor";
                     firebase.database.ref("/").update({
-                       "motorStatus" : 1  ,
+                       "motorStatus" : 0  ,
                     })
                 }
                 else{
                     this.status = "turn off motor";
-                    this.motorStatus = 0;
+                    this.motorStatus = 1;
                     firebase.database.ref("/").update({
-                       "motorStatus" : 0,
+                       "motorStatus" : 1,
                     })
                 }
 
@@ -253,26 +256,35 @@
                 })
             },
             toggleLcd(){
-            //     this.lcdOn = !this.lcdOn ;
-            //     if(this.lcdOn) {
-            //         this.status = "turn on Lcd"
-            //     }
-            //     else{
-            //         this.status = "turn off Lcd"
-            //     }
-            //     let obj = {
-            //         name : this.user.name,
-            //         command : this.status ,
-            //         timestamp: this.time.toLocaleString() ,
-            //     }
-            //     firebase.firestore.collection("commands").add(obj)
-            //     .then(doc =>{
-            //         alert('command is send with Doc id: ' + doc.id )
-            //         this.status = "";
-            //         this.fetchData()
-            //     }).catch(e => {
-            //         console.log(e)
-            //     })
+                if(this.lcdStatus == 0 ) {
+                    this.lcdStatus = 1;
+                    this.status = "turn on fan";
+                    firebase.database.ref("/").update({
+                       "led1Status" : 1  ,
+                    })
+                }
+                else{
+                    this.status = "turn off led";
+                    this.lcdStatus = 0;
+                    firebase.database.ref("/").update({
+                       "led1Status" : 0,
+                    })
+                }
+
+                let obj = {
+                    name : this.user.name,
+                    command : this.status ,
+                    timestamp: this.time.toLocaleString() ,
+                }
+                firebase.firestore.collection("commands").add(obj)
+                .then(doc =>{
+                    // alert('command '+ this.status  + 'is send with Doc id: ' + doc.id )
+                    this.$toastr.s('command' + this.status  + ' is send with Doc id: ' + doc.id , "SUCCESS MESSAGE");
+                    this.status = "";
+                    this.fetchData()
+                }).catch(e => {
+                    console.log(e);
+                })
             },
             saveData(){
             },

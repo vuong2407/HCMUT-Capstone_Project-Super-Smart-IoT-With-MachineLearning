@@ -59,8 +59,10 @@ class Irrigation extends Command
                 "temperature" => $temp
             ],
         ]);
+        info("sdf");
         $responseBody = $response->getBody()->getContents();
-        $database->getReference('iggrigation')->set((int)$responseBody);
+        $result = (int)$responseBody == 1 ? 0 : 1;
+        $database->getReference('pumpStatus')->set($result);
         return 0;
     }
 }
