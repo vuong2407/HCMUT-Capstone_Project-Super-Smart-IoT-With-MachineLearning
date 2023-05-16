@@ -5,7 +5,7 @@ import openai
 import Modules.UsingModel as UM
 from tensorflow import keras
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 messages = [
     {"role": "system", "content": "You are a helpful and kind AI Assistant."},

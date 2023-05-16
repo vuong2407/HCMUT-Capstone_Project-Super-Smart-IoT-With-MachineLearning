@@ -33,6 +33,8 @@ export const LM35Collection = db.ref("dataLM35")
 export const DHT11Collection = db.ref("dataDHT11")
 export const moistureCollection = db.ref("dataMoisture")
 export const motorStatus = db.ref("motorStatus")
+export const ledStatus = db.ref("ledStatus")
+export const led1Status = db.ref("led1Status")
 export default {
   firebase: firebase,
   firestore: firebase.firestore(),

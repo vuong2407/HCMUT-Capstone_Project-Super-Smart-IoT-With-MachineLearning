@@ -86,8 +86,8 @@
                                             class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                                             A
                                         </div>
-                                        <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                                            <span>{{ message.message }}</span>
+                                        <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl w-[450px]">
+                                            <textarea :rows="message.rowMessage" class="message-textarea">{{ message.message }}</textarea>
                                             <!-- <textarea id="message-input" class="message-textarea" >{{ message.message }} </textarea> -->
                                         </div>
                                     </div>
@@ -160,15 +160,22 @@ export default {
             messages: [
                 {
                     message: 'Can i get information about plant disease',
-                    isBot: false
+                    isBot: false,
+                    rowMessage: 1,
                 },
                 {
-                    message: 'Of course, what kind of information would you like to know? Please let me know and I will do my best to help you.',
-                    isBot: true
+                    message: 'Of course, what kind of information would you like to know? Please let me know and I will do my best to help you',
+                    isBot: true,
+                    rowMessage: 2,
                 }
             ],
-            newMessage: ''
+            newMessage: '',
         }
+    },
+    computed: {
+        charactersPerRow() {
+            return 40; // Example: 40 characters per row
+        },
     },
     mounted() {
         if (this.name && this.disease) {
@@ -193,10 +200,10 @@ export default {
                 }).then((res) => {
                     console.log(res.data);
                     const messagesRecieve = res.data;
-                    // messagesRecieve.replace(/\\n/g, '<br />');
                     this.messages.push({
                         message: messagesRecieve,
-                        isBot: true
+                        isBot: true,
+                        rowMessage : Math.ceil(messagesRecieve.length / this.charactersPerRow)
                     });
                 });
             } catch (error) {
@@ -207,7 +214,7 @@ export default {
 }
 </script>
 <style>
-  .message-textarea {
+.message-textarea {
     border: none;
     width: 100%;
     height: auto;
@@ -218,5 +225,5 @@ export default {
     line-height: inherit;
     padding: 0;
     margin: 0;
-  }
+}
 </style>

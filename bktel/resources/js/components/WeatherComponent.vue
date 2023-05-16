@@ -1,5 +1,6 @@
 <template>
-    <section class="h-[92vh] overflow-hidden" style="background-color: #c1cfea">
+    <section class="h-[92vh] rounded overflow-hidden"
+        style="background-image:url('/images/weather.jpeg');   background-position: center; background-repeat: no-repeat;background-size: cover;">
         <div class=" h-100">
             <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828">
                 <div class="col-md-9 col-lg-7 col-xl-5">
@@ -28,7 +29,8 @@
                                                 </p>
                                                 <p class="text-muted mb-0">
                                                     <!-- {{ currentTime }} {{ current.datetime.formatted_day }} {{ current.datetime.formatted_date }} -->
-                                                    {{ current.datetime.formatted_time }} {{ current.datetime.formatted_day }} {{ current.datetime.formatted_date }}
+                                                    {{ current.datetime.formatted_time }} {{ current.datetime.formatted_day
+                                                    }} {{ current.datetime.formatted_date }}
                                                 </p>
                                             </div>
                                             <div class="flex flex-col items-center">
@@ -53,11 +55,13 @@
                                 </ul>
                                 <!-- Carousel inner -->
                                 <div class="carousel-inner">
+                                    <p class="font-bold text-blue-600">Today Weather Forecast</p>
                                     <div class="carousel-item active">
-                                        <div  class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
+                                        <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
                                             <div v-for="forecastToday in todayArr" class="flex-column">
                                                 <p class="small">
-                                                    <strong>{{ Math.floor((forecastToday.forecast.temp - 32) * 55.555) / 100 }}</strong>
+                                                    <strong>{{ Math.floor((forecastToday.forecast.temp - 32) * 55.555) / 100
+                                                    }}°C</strong>
                                                 </p>
                                                 <!-- <i class="far fa-sun fa-2x mb-3" style="color: #ddd"></i> -->
                                                 <img :src="forecastToday.condition.icon" width="50px" />
@@ -85,20 +89,23 @@
                                 </ul>
                                 <!-- Carousel inner -->
                                 <div class="carousel-inner">
+                                    <p class="font-bold text-blue-600">Week Weather Forecast</p>
                                     <div class="carousel-item active">
                                         <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
-                                            <div v-for="forecastToday in todayArr" class="flex-column">
+                                            <div v-for="forecastWeek in forecastArr" class="flex-column">
                                                 <p class="small">
-                                                    <strong>{{ Math.floor((forecastToday.forecast.temp - 32) * 55.555) / 100 }}</strong>
+                                                    <strong>{{ Math.floor((forecastWeek.forecast.temp - 32) * 55.555) / 100
+                                                    }}°C</strong>
                                                 </p>
                                                 <!-- <i class="far fa-sun fa-2x mb-3" style="color: #ddd"></i> -->
-                                                <img :src="forecastToday.condition.icon" width="50px" />
+                                                <img :src="forecastWeek.condition.icon" width="50px" />
                                                 <p class="mb-0">
-                                                    <strong>{{ forecastToday.datetime.formatted_time }}</strong>
+                                                    <strong>{{ forecastWeek.datetime.formatted_time }}</strong>
                                                 </p>
                                                 <p class="mb-0 text-muted" style="font-size: 0.65rem">
-                                                    {{ forecastToday.condition.desc }}
+                                                    {{ forecastWeek.condition.desc }}
                                                 </p>
+                                                <p class="mb-0 text-muted" > {{ forecastWeek.datetime.formatted_day }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -144,12 +151,22 @@ export default {
     mounted() {
         let today = this.current.datetime.formatted_day;
         this.todayArr = this.forecast.forecast.filter(obj => obj.datetime.formatted_day === today);
-        let days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+        let allDays = [];
+        this.forecast.forecast.forEach(item => {
+            const formatDate = item.datetime.formatted_day;
+            // console.log(allDays.includes(formatDate));
+            if (!allDays.includes(formatDate)) {
+                allDays.push(formatDate);
+                this.forecastArr.push(item);
+            }
+        });
+        console.log(this.forecastArr);
     },
     data() {
         return {
             time: new Date(),
             todayArr: [],
+            forecastArr: [],
         };
     },
 };
