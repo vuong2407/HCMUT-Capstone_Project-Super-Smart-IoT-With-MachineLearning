@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <nav class="bg-blue-200 border-gray-300 rounded dark:bg-gray-900">
+    <div >
+        <nav class="w-full z-[3] fixed bg-blue-200 border-gray-300 rounded dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto">
                 <a href="#" class="flex items-center">
                     <img

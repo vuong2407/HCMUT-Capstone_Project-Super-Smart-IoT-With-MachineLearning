@@ -1,27 +1,27 @@
 <template>
-  <div class="w-full flex flex-wrap justify-center ">
-    <div class="flex flex-row justify-center mt-[10px] font-bold  ">
+  <div class="flex flex-wrap ml-[3.2rem] md:ml-72 mt-[50px] md:mt-[70px]">
+    <div class="flex flex-col items-center md:flex-row justify-left md:justify-around w-full mt-[10px] font-bold  ">
       <div>
-        <BarChart :chart-data="show.humDataRender" :width=500 :height=300 :css-classes="cssClassesBar" />
+        <BarChart :chart-data="show.humDataRender" :height=300 :css-classes="cssClassesBar" />
         <div class="flex flex-row justify-center mt-[10px] font-bold"> DHT11</div>
       </div>
       <div>
-        <LineChart class="ml-[30px]" :chart-data="show.temptDataLineRender" :width=500 :height=300
+        <LineChart class="md:ml-[30px]" :chart-data="show.temptDataLineRender" :width=500 :height=300
           :css-classes="cssClassesLine" :chart-options="chartOptions1" />
         <div class="flex flex-row justify-center mt-[10px] font-bold"> LM35</div>
       </div>
     </div>
-    <div class="w-full flex flex-wrap justify-center ">
-      <div class="flex flex-row justify-center mt-[20px] mb-[20px]">
+    <div class="w-full flex flex-wrap ">
+      <div class="flex flex-col md:flex-row justify-left  w-full md:justify-around mt-[20px] mb-[20px] items-center">
         <div>
-          <LineChart :chart-data="show.moistureDataRender" :width="500" :height="300" :css-classes="cssClassesLine"
+          <LineChart :chart-data="show.moistureDataRender" :height="300" :css-classes="cssClassesLine"
             :chart-options="chartOptions2" />
           <div class="flex flex-row justify-center mt-[10px] font-bold"> Soil Moisture</div>
         </div>
         <!-- {{state.moistureDataFirebase.datasets[0].data}} -->
-        <div class="flex flex-col w-[500px] ml-[30px]">
-          <div class="py-2 inline-block min-w-full">
-            <table class="min-w-full bg-green-50">
+        <div class="flex flex-col w-[350px] md:w-[500px] md:ml-[30px]">
+          <div class=" inline-block min-w-full">
+            <table class="min-w-full bg-green-50 mb-[10px]">
               <thead class="border-b bg-gray-200">
                 <tr>
                   <th scope="col" class="text-[18px] font-medium text-gray-900 px-6 py-[10px] text-left">
@@ -294,9 +294,9 @@ export default {
     return {
       popupMessage: '',
       showPopup: false,
-      cssClassesBar: 'bg-[#faebd7] rounded-[10px]',
-      cssClassesLine: 'bg-[#faebd7] rounded-[10px]',
-      cssClassesDonut: 'ml-[30px]',
+      cssClassesBar: 'bg-[#faebd7] rounded-[10px] w-[350px] sm:w-[500px]',
+      cssClassesLine: 'bg-[#faebd7] rounded-[10px]  w-[350px] sm:w-[500px]',
+      cssClassesDonut: 'md:ml-[30px]',
       chartOptions1: {
         responsive: true,
         maintainAspectRatio: false,

@@ -1,8 +1,8 @@
 <template>
-    <div class="relative h-[92vh] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
+    <div class="relative h-[92vh] flex items-center justify-center bg-gray-50 py-12  ml-[3rem] md:ml-64 mt-[40px] md:mt-[53px] bg-gray-500 bg-no-repeat bg-cover relative items-center "
         style="background-image: url(https://images.unsplash.com/photo-1621243804936-775306a8f2e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);">
         <div class="absolute bg-black opacity-40 inset-0 z-0"></div>
-        <div class="sm:max-w-lg w-full p-[30px] bg-white rounded-xl z-10 scale-[95%]">
+        <div class="sm:max-w-lg w-full p-[30px] bg-white rounded-xl z-1 scale-[95%]">
             <div class="text-center">
                 <h2 class="text-3xl font-bold text-gray-900">
                     File Upload!
@@ -13,9 +13,10 @@
                 <div class="grid grid-cols-1 space-y-2">
                     <label class="text-sm font-bold text-gray-500 tracking-wide">Attach Document</label>
                     <div class="flex items-center justify-center w-full">
-                        <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-5 group text-center">
-                            <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
-                                <div class="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                        <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-[20px] md:p-5 group text-center">
+                            <div
+                                class="h-full w-full text-center flex flex-col md:items-center justify-center">
+                                <div class="flex flex-auto max-h-48 w-4/5 md:w-2/5 mx-auto sm:-mt-3">
                                     <img v-if="!imageUrl" class="has-mask h-36 object-center"
                                         src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
                                         alt="freepik image">
