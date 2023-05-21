@@ -115,9 +115,9 @@
                 </div>
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full  hidden sm:block md:flex-row justify-left md:justify-around">
                 <div class="overflow-x-auto ">
-                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="py-2 inline-block sm:px-6 lg:px-8">
                         <div class="h-[300px] overflow-auto bg-yellow-50">
                             <table class="min-w-full">
                                 <thead class="border border-solid rounded-lg bg-gray-300 ">

@@ -1,7 +1,7 @@
 <template>
-    <div class="flex h-[92vh] antialiased text-gray-800">
+    <div class="flex h-[92vh] antialiased text-gray-800 ml-[3.2rem] md:ml-72 mt-[50px] md:mt-[70px]">
         <div class="flex flex-row h-full w-full overflow-x-hidden">
-            <div class="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
+            <div class="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 hidden sm:block">
                 <div class="flex flex-row items-center justify-center h-12 w-full">
                     <div class="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"

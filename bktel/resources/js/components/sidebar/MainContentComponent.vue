@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap ml-[3.2rem] md:ml-72 mt-[50px] md:mt-[70px]">
-    <div class="flex flex-col items-center md:flex-row justify-left md:justify-around w-full mt-[10px] font-bold  ">
+    <div class="flex flex-col items-center md:flex-row justify-left  w-full md:justify-around mt-[10px] font-bold  ">
       <div>
         <BarChart :chart-data="show.humDataRender" :height=300 :css-classes="cssClassesBar" />
         <div class="flex flex-row justify-center mt-[10px] font-bold"> DHT11</div>

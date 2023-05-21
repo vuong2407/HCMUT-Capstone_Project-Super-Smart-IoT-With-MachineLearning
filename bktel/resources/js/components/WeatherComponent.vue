@@ -1,10 +1,10 @@
 <template>
-    <section class="h-[92vh] rounded overflow-hidden"
-        style="background-image:url('/images/weather.jpeg');   background-position: center; background-repeat: no-repeat;background-size: cover;">
+    <section class="h-[100vh] rounded relative"
+        style="background-image:url('/images/weather.jpeg');   background-position: center; background-repeat: no-repeat;background-size: cover; position: relative; top:40px">
         <div class=" h-100">
             <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828">
-                <div class="col-md-9 col-lg-7 col-xl-5">
-                    <div class="card mb-4 gradient-custom" style="border-radius: 25px">
+                <div class="col-md-9 col-lg-7 col-xl-5 ml-[3.2rem] md:ml-72 mt-[50px] md:mt-[70px]">
+                    <div class="card mb-2 gradient-custom" style="border-radius: 25px">
                         <div class="card-body p-4">
                             <div id="demo1" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
@@ -16,7 +16,7 @@
                                 <!-- Carousel inner -->
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <div class="d-flex justify-content-between mb-4 pb-2">
+                                        <div class="d-flex justify-content-between pb-2">
                                             <div>
                                                 <h2 class="display-2">
                                                     <strong>{{ changeTemptoDeg }}°C</strong>
@@ -44,8 +44,8 @@
                         </div>
                     </div>
 
-                    <div class="card mb-4" style="border-radius: 25px">
-                        <div class="card-body p-4">
+                    <div class="card mb-2" style="border-radius: 25px">
+                        <div class="card-body p-2">
                             <div id="demo2" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ul class="carousel-indicators mb-0">
@@ -57,7 +57,7 @@
                                 <div class="carousel-inner">
                                     <p class="font-bold text-blue-600">Today Weather Forecast</p>
                                     <div class="carousel-item active">
-                                        <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
+                                        <div class="d-flex justify-content-around text-center pb-2 pt-2">
                                             <div v-for="forecastToday in todayArr" class="flex-column">
                                                 <p class="small">
                                                     <strong>{{ Math.floor((forecastToday.forecast.temp - 32) * 55.555) / 100
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="card" style="border-radius: 25px">
-                        <div class="card-body p-4">
+                        <div class="card-body p-2">
                             <div id="demo3" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ul class="carousel-indicators mb-0">
@@ -91,7 +91,7 @@
                                 <div class="carousel-inner">
                                     <p class="font-bold text-blue-600">Week Weather Forecast</p>
                                     <div class="carousel-item active">
-                                        <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
+                                        <div class="d-flex justify-content-around text-center pb-2 pt-2">
                                             <div v-for="forecastWeek in forecastArr" class="flex-column">
                                                 <p class="small">
                                                     <strong>{{ Math.floor((forecastWeek.forecast.temp - 32) * 55.555) / 100
